@@ -3,8 +3,8 @@ html {
 }
 
 .card {
-    width: 10px; /* Adjust width to your desired size */
-    height: 15px; /* Adjust height to your desired size */
+    width: 2px; /* Adjust width to your desired size */
+    height: 3px; /* Adjust height to your desired size */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,23 +41,23 @@ html {
 
     
 .card hearts { 
-    width: 10px;
-    height: 20px;
+    width: 2px;
+    height: 3px;
     background-color: #ffcccc; }
 
 .card diamonds {
-    width: 10px;
-    height: 20px;
+    width: 2px;
+    height: 3px;
     background-color: #ffcccc; }
 
 .card clubs {
-    width: 10px;
-    height: 20px;
+    width: 2px;
+    height: 3px;
     background-color: #ccffcc; }
 
 .card spades {
-    width: 10px;
-    height: 20px;
+    width: 2px;
+    height: 3px;
     background-color: #ccccff; }
         /* Add any additional styling as needed */
 
