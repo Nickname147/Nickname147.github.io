@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poker Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to a CSS file for styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #card-grid {
+            display: grid;
+            grid-template-columns: repeat(13, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .card {
+            width: 50px; /* Adjust size as needed */
+            cursor: pointer;
+        }
+        /* Add any additional styling as needed */
+    </style>
 </head>
 <body>
     <header>
@@ -16,15 +32,29 @@
             <h2>Input Your Cards</h2>
             <form id="poker-form">
                 <label for="hand">Your Hand:</label>
-                <input type="text" id="hand" placeholder="e.g. AH KH QH JH TH" required>
+                <input type="text" id="hand" placeholder="e.g. AH KH" required>
                 
                 <label for="community-cards">Community Cards:</label>
-                <input type="text" id="community-cards" placeholder="e.g. 9H 8H 7H" required>
+                <input type="text" id="community-cards" placeholder="e.g. 9H 8H" required>
                 
                 <button type="submit">Calculate</button>
             </form>
         </section>
-        
+
+        <section>
+            <h2>Select Your Cards</h2>
+            <div id="card-grid">
+                <!-- Example card images -->
+                <img src="images/AS.png" alt="Ace of Spades" class="card" data-card="AS">
+                <img src="images/2S.png" alt="2 of Spades" class="card" data-card="2S">
+                <img src="images/3S.png" alt="3 of Spades" class="card" data-card="3S">
+                <img src="images/JS.png" alt="Jack of Spades" class="card" data-card="JS">
+                <!-- Add all 52 cards similarly -->
+                <img src="images/AD.png" alt="Ace of Diamonds" class="card" data-card="AD">
+                <!-- Repeat for other suits -->
+            </div>
+        </section>
+
         <section id="results">
             <h2>Results</h2>
             <div id="output"></div>
@@ -36,5 +66,23 @@
     </footer>
 
     <script src="script.js"></script> <!-- Link to a JavaScript file for functionality -->
+    <script>
+        const handInput = document.getElementById('hand');
+        const communityInput = document.getElementById('community-cards');
+
+        // Event listener for card clicks
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                const cardValue = card.getAttribute('data-card');
+                // Change this logic based on where you want to add the card
+                if (handInput.value.split(' ').length < 2) {
+                    handInput.value += (handInput.value ? ' ' : '') + cardValue;
+                } else {
+                    communityInput.value += (communityInput.value ? ' ' : '') + cardValue;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
