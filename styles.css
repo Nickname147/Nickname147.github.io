@@ -28,16 +28,16 @@ html {
         }
 
     
-.card hearts { 
+.card.hearts { 
     background-color: red; }
 
-.card diamonds {
+.card.diamonds {
     background-color: pink; }
 
-.card clubs {
+.card.clubs {
     background-color: grey; }
 
-.card spades {
+.card.spades {
     background-color: black; }
         /* Add any additional styling as needed */
 
