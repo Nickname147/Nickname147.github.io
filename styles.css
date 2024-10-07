@@ -3,8 +3,8 @@ html {
 }
 
 .card {
-    width: 40px; /* Adjust width to your desired size */
-    height: 60px; /* Adjust height to your desired size */
+    width: 10px; /* Adjust width to your desired size */
+    height: 15px; /* Adjust height to your desired size */
     display: flex;
     align-items: center;
     justify-content: center;
