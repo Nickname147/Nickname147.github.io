@@ -15,6 +15,7 @@
             position: absolute;
             cursor: move;
         }
+        #cropped-image-display { margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -29,6 +30,7 @@
         </div>
         <button id="process-btn" style="display:none;">Process Image</button>
         <div id="result"></div>
+        <div id="cropped-image-display" style="display:none;"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.1/tesseract.min.js"></script>
@@ -96,24 +98,33 @@
 
             ctx.drawImage(uploadedImage, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
-            // Convert to grayscale
+            // Convert to grayscale and increase contrast
             const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imgData.data;
 
             for (let i = 0; i < data.length; i += 4) {
                 const avg = (data[i] + data[i + 1] + data[i + 2]) / 3; // Average for grayscale
                 data[i] = data[i + 1] = data[i + 2] = avg; // Set RGB values to the average
+                data[i] = data[i] < 128 ? 0 : 255; // Simple thresholding for contrast
             }
 
             ctx.putImageData(imgData, 0, 0);
+
+            // Display cropped image for debugging
+            const croppedImageDisplay = document.getElementById('cropped-image-display');
+            croppedImageDisplay.innerHTML = ''; // Clear previous images
+            const croppedImageEl = document.createElement('img');
+            croppedImageEl.src = canvas.toDataURL();
+            croppedImageDisplay.appendChild(croppedImageEl);
+            croppedImageDisplay.style.display = 'block';
 
             // Recognize text from the cropped image
             try {
                 const { data: { text } } = await Tesseract.recognize(canvas.toDataURL(), 'eng', {
                     logger: info => console.log(info),
                     tessedit_char_whitelist: '23456789TJQKA', // Limit recognition to poker cards
-                    preserve_interword_spaces: '1', // Preserve spaces
-                    oem: 1, // Use LSTM OCR engine
+                    preserve_interword_spaces: '1',
+                    oem: 1,
                 });
                 document.getElementById('result').innerText += `Card Detected: ${text.trim()}\n`;
             } catch (error) {
