@@ -14,8 +14,8 @@ html {
         }
 
 .card {
-            width: 10px; /* Adjust size as needed */
-            height: 15px; /* Adjust height for a card-like appearance */
+            width: 20px; /* Adjust size as needed */
+            height: 30px; /* Adjust height for a card-like appearance */
             display: flex;
             align-items: center;
             justify-content: center;
