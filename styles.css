@@ -14,3 +14,34 @@ html {
     font-weight: bold;
     font-size: 14px; /* Adjust font size for the card value */
 }
+
+    body {
+            font-family: Arial, sans-serif;
+        }
+
+        #card-grid {
+            display: grid;
+            grid-template-columns: repeat(13, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            width: 50px; /* Adjust size as needed */
+            height: 70px; /* Adjust height for a card-like appearance */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #000;
+            background-color: #f0f0f0; /* Light gray background */
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .hearts { background-color: #ffcccc; }
+        .diamonds { background-color: #ffcccc; }
+        .clubs { background-color: #ccffcc; }
+        .spades { background-color: #ccccff; }
+        /* Add any additional styling as needed */
+    </style>
