@@ -3,156 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poker Card Recognizer</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        #image-container { position: relative; }
-        #uploaded-image { max-width: 100%; display: none; }
-        .crop-area {
-            border: 2px dashed #FF0000;
-            position: absolute;
-            cursor: move;
-            width: 100px; /* Initial crop area size */
-            height: 150px;
-            display: none;
-        }
-    </style>
+    <title>Texas Hold'em Odds Calculator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Poker Card Recognizer</h1>
-        <input type="file" id="screenshot" accept="image/*">
-        <button id="upload-btn">Upload</button>
-        <div id="image-container">
-            <img id="uploaded-image" alt="Uploaded Image">
-            <div id="crop-area" class="crop-area"></div>
+        <h1>Texas Hold'em Odds Calculator</h1>
+        <div class="card-selection">
+            <h2>Select Your Cards:</h2>
+            <div id="card-container">
+                <!-- Cards will be generated here -->
+            </div>
         </div>
-        <button id="process-btn" style="display:none;">Process Cards</button>
+        <button id="calculate-btn">Calculate Odds</button>
         <div id="result"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.1/tesseract.min.js"></script>
-    <script>
-        let cropArea = document.getElementById('crop-area');
-        let uploadedImage = document.getElementById('uploaded-image');
-
-        document.getElementById('upload-btn').addEventListener('click', () => {
-            const fileInput = document.getElementById('screenshot');
-            if (fileInput.files.length === 0) {
-                alert('Please select an image to upload.');
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onload = (event) => {
-                uploadedImage.src = event.target.result;
-                uploadedImage.style.display = 'block';
-                cropArea.style.display = 'block';
-                cropArea.style.width = '100px'; // Reset to initial width
-                cropArea.style.height = '150px'; // Reset to initial height
-                cropArea.style.left = '0px'; // Reset position
-                cropArea.style.top = '0px'; // Reset position
-                document.getElementById('process-btn').style.display = 'block';
-            };
-
-            reader.readAsDataURL(file);
-        });
-
-        uploadedImage.addEventListener('mousedown', (e) => {
-            const startX = e.clientX - uploadedImage.getBoundingClientRect().left;
-            const startY = e.clientY - uploadedImage.getBoundingClientRect().top;
-
-            cropArea.style.left = `${startX}px`;
-            cropArea.style.top = `${startY}px`;
-            cropArea.style.display = 'block';
-
-            const moveCropArea = (e) => {
-                const currentX = e.clientX - uploadedImage.getBoundingClientRect().left;
-                const currentY = e.clientY - uploadedImage.getBoundingClientRect().top;
-                const width = currentX - startX;
-                const height = currentY - startY;
-
-                // Update crop area dimensions
-                cropArea.style.width = `${Math.abs(width)}px`;
-                cropArea.style.height = `${Math.abs(height)}px`;
-                cropArea.style.left = `${Math.min(startX, currentX)}px`;
-                cropArea.style.top = `${Math.min(startY, currentY)}px`;
-            };
-
-            document.addEventListener('mousemove', moveCropArea);
-
-            document.addEventListener('mouseup', () => {
-                document.removeEventListener('mousemove', moveCropArea);
-            }, { once: true });
-        });
-
-        document.getElementById('process-btn').addEventListener('click', async () => {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            const rect = cropArea.getBoundingClientRect();
-            const scaleX = uploadedImage.naturalWidth / uploadedImage.width;
-            const scaleY = uploadedImage.naturalHeight / uploadedImage.height;
-
-            const cropWidth = rect.width * scaleX;
-            const cropHeight = rect.height * scaleY;
-            const cropX = rect.left * scaleX;
-            const cropY = rect.top * scaleY;
-
-            canvas.width = cropWidth;
-            canvas.height = cropHeight;
-
-            ctx.drawImage(uploadedImage, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
-
-            // Convert the canvas to grayscale
-            let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            let data = imgData.data;
-            for (let i = 0; i < data.length; i += 4) {
-                const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-                data[i] = avg;     // Red
-                data[i + 1] = avg; // Green
-                data[i + 2] = avg; // Blue
-            }
-            ctx.putImageData(imgData, 0, 0);
-
-            try {
-                const { data: { text } } = await Tesseract.recognize(canvas.toDataURL(), 'eng', {
-                    logger: info => console.log(info),
-                });
-
-                // Process detected text
-                const recognizedCards = processCards(text.trim());
-                document.getElementById('result').innerText = `Cards Detected: ${recognizedCards.join(', ')}`;
-            } catch (error) {
-                console.error('Error during OCR processing:', error);
-            }
-        });
-
-        function processCards(detectedText) {
-            // Define patterns for ranks and suits
-            const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-            const suits = ['♠', '♥', '♦', '♣']; // Unicode characters for suits
-            const cards = [];
-
-            // Split the detected text into potential card representations
-            const lines = detectedText.split('\n');
-            for (let line of lines) {
-                for (let rank of ranks) {
-                    for (let suit of suits) {
-                        if (line.includes(rank) && line.includes(suit)) {
-                            cards.push(line.trim());
-                        }
-                    }
-                }
-            }
-
-            return cards.length > 0 ? cards : ['No cards detected'];
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-
-
