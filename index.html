@@ -20,6 +20,8 @@
 </body>
 </html> -->
 
+<!--
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,6 +101,120 @@
             };
 
             reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Odds Calculator</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        #image-container { position: relative; }
+        #uploaded-image { max-width: 100%; }
+        .crop-area {
+            border: 2px dashed #FF0000;
+            position: absolute;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Texas Hold'em Odds Calculator</h1>
+        <p>Upload a screenshot of your poker game:</p>
+        <input type="file" id="screenshot" accept="image/*">
+        <button id="upload-btn">Upload</button>
+        <div id="image-container">
+            <img id="uploaded-image" src="" alt="Uploaded Image" style="display:none;">
+            <div id="crop-area" class="crop-area" style="display:none;"></div>
+        </div>
+        <button id="process-btn" style="display:none;">Process Image</button>
+        <div id="result"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.1/tesseract.min.js"></script>
+    <script>
+        let cropArea = document.getElementById('crop-area');
+        let uploadedImage = document.getElementById('uploaded-image');
+
+        document.getElementById('upload-btn').addEventListener('click', async () => {
+            const fileInput = document.getElementById('screenshot');
+            if (fileInput.files.length === 0) {
+                alert('Please select an image to upload.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                uploadedImage.src = event.target.result;
+                uploadedImage.style.display = 'block';
+                cropArea.style.display = 'block';
+                cropArea.style.width = '100px'; // Initial crop area size
+                cropArea.style.height = '150px';
+                cropArea.style.left = '50px'; // Initial position
+                cropArea.style.top = '50px';
+                document.getElementById('process-btn').style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        // Enable dragging the crop area
+        cropArea.addEventListener('mousedown', (e) => {
+            const offsetX = e.clientX - cropArea.getBoundingClientRect().left;
+            const offsetY = e.clientY - cropArea.getBoundingClientRect().top;
+
+            const moveCropArea = (e) => {
+                cropArea.style.left = `${e.clientX - offsetX}px`;
+                cropArea.style.top = `${e.clientY - offsetY}px`;
+            };
+
+            document.addEventListener('mousemove', moveCropArea);
+
+            document.addEventListener('mouseup', () => {
+                document.removeEventListener('mousemove', moveCropArea);
+            }, { once: true });
+        });
+
+        // Process the cropped image when the button is clicked
+        document.getElementById('process-btn').addEventListener('click', async () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            const rect = cropArea.getBoundingClientRect();
+            const scaleX = uploadedImage.naturalWidth / uploadedImage.width;
+            const scaleY = uploadedImage.naturalHeight / uploadedImage.height;
+
+            const cropWidth = rect.width * scaleX;
+            const cropHeight = rect.height * scaleY;
+            const cropX = rect.left * scaleX;
+            const cropY = rect.top * scaleY;
+
+            canvas.width = cropWidth;
+            canvas.height = cropHeight;
+
+            ctx.drawImage(uploadedImage, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+            // Recognize text from the cropped image
+            try {
+                const { data: { text } } = await Tesseract.recognize(canvas.toDataURL(), 'eng', {
+                    logger: info => console.log(info)
+                });
+                document.getElementById('result').innerText += `Card Detected: ${text.trim()}\n`;
+            } catch (error) {
+                console.error('Error during OCR processing:', error);
+            }
         });
     </script>
 </body>
