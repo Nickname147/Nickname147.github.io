@@ -19,12 +19,9 @@ document.getElementById('upload-btn').addEventListener('click', async () => {
                 const { data: { text } } = await Tesseract.recognize(img, 'eng', {
                     logger: info => console.log(info) // Log progress
                 });
-                
+
                 // Display the extracted text
                 document.getElementById('result').innerText = `Extracted Text: ${text}`;
-                
-                // Call your parsing function here
-                // parseTextAndCalculateOdds(text);
             } catch (error) {
                 console.error('Error during OCR processing:', error);
             }
@@ -41,3 +38,4 @@ document.getElementById('upload-btn').addEventListener('click', async () => {
 
     reader.readAsDataURL(file);
 });
+
