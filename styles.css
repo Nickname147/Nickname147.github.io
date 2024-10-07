@@ -40,11 +40,26 @@ html {
         }
 
     
-.hearts { background-color: #ffcccc; }
+.card hearts { 
+    width: 10px;
+    height: 20px;
+    background-color: #ffcccc; }
 
-.diamonds { background-color: #ffcccc; }
+.card diamonds {
+    width: 10px;
+    height: 20px;
+    background-color: #ffcccc; }
 
-.clubs { background-color: #ccffcc; }
+.card clubs {
+    width: 10px;
+    height: 20px;
+    background-color: #ccffcc; }
 
-.spades { background-color: #ccccff; }
+.card spades {
+    width: 10px;
+    height: 20px;
+    background-color: #ccccff; }
         /* Add any additional styling as needed */
+
+
+
