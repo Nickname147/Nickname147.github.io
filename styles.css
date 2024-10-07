@@ -2,6 +2,19 @@ html {
     
 }
 
+.card {
+    width: 40px; /* Adjust width to your desired size */
+    height: 60px; /* Adjust height to your desired size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    background-color: #f0f0f0; /* Light gray background */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px; /* Adjust font size for the card value */
+}
+
 
 body {
 
