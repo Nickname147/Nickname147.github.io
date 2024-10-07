@@ -9,7 +9,7 @@ html {
 #card-grid {
             display: grid;
             grid-template-columns: repeat(13, 1fr);
-            gap: 10px;
+            gap: 5px;
             margin-bottom: 20px;
         }
 
