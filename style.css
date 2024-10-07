@@ -1,40 +1,35 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url('https://images.unsplash.com/photo-1579486861618-2bc249a6a6e0'); /* Poker-themed background */
-    background-size: cover;
-    background-position: center;
+    background-color: #2E8B57;
     color: white;
     text-align: center;
-    padding: 50px;
 }
 
 .container {
-    background-color: rgba(0, 0, 0, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
     padding: 20px;
+    background-color: #3E6B47;
     border-radius: 10px;
-    display: inline-block;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-h1 {
-    margin-bottom: 20px;
-}
-
-input[type="file"] {
+.card-selection {
     margin: 20px 0;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
 }
 
-button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
+.card {
+    display: inline-block;
+    width: 60px;
+    height: 90px;
+    margin: 5px;
+    background-color: #FFD700;
+    border: 1px solid #FFF;
     border-radius: 5px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #0056b3;
+.card.selected {
+    background-color: #FF4500;
 }
+
