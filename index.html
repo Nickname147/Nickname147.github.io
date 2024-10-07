@@ -3,26 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Texas Hold'em Odds Calculator</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Poker Calculator</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to a CSS file for styling -->
 </head>
 <body>
-    <div class="container">
-        <h1>Texas Hold'em Odds Calculator</h1>
-        <div class="card-selection">
-            <h2>Select Player 1's Cards:</h2>
-            <div id="player1-container">
-                <!-- Player 1 cards -->
-            </div>
-            <h2>Select Player 2's Cards:</h2>
-            <div id="player2-container">
-                <!-- Player 2 cards -->
-            </div>
-        </div>
-        <button id="calculate-btn">Calculate Odds</button>
-        <div id="result"></div>
-    </div>
+    <header>
+        <h1>Poker Calculator</h1>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Input Your Cards</h2>
+            <form id="poker-form">
+                <label for="hand">Your Hand:</label>
+                <input type="text" id="hand" placeholder="e.g. AH KH QH JH TH" required>
+                
+                <label for="community-cards">Community Cards:</label>
+                <input type="text" id="community-cards" placeholder="e.g. 9H 8H 7H" required>
+                
+                <button type="submit">Calculate</button>
+            </form>
+        </section>
+        
+        <section id="results">
+            <h2>Results</h2>
+            <div id="output"></div>
+        </section>
+    </main>
 
-    <script src="script.js"></script>
+    <footer>
+        <p>&copy; 2024 Poker Calculator. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script> <!-- Link to a JavaScript file for functionality -->
 </body>
 </html>
