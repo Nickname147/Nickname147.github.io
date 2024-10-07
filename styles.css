@@ -15,18 +15,18 @@ html {
     font-size: 14px; /* Adjust font size for the card value */
 }
 
-    body {
+ body {
             font-family: Arial, sans-serif;
         }
 
-        #card-grid {
+#card-grid {
             display: grid;
             grid-template-columns: repeat(13, 1fr);
             gap: 10px;
             margin-bottom: 20px;
         }
 
-        .card {
+.card {
             width: 50px; /* Adjust size as needed */
             height: 70px; /* Adjust height for a card-like appearance */
             display: flex;
@@ -39,9 +39,12 @@ html {
             font-size: 16px;
         }
 
-        .hearts { background-color: #ffcccc; }
-        .diamonds { background-color: #ffcccc; }
-        .clubs { background-color: #ccffcc; }
-        .spades { background-color: #ccccff; }
+    
+.hearts { background-color: #ffcccc; }
+
+.diamonds { background-color: #ffcccc; }
+
+.clubs { background-color: #ccffcc; }
+
+.spades { background-color: #ccccff; }
         /* Add any additional styling as needed */
-    </style>
