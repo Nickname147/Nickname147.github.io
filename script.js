@@ -24,7 +24,7 @@ document.getElementById('upload-btn').addEventListener('click', async () => {
                 document.getElementById('result').innerText = `Extracted Text: ${text}`;
                 
                 // Clear the file input
-                fileInput.value = ''; // This will reset the file input
+                fileInput.value = ''; // This should clear the input field
             } catch (error) {
                 console.error('Error during OCR processing:', error);
             }
@@ -41,6 +41,3 @@ document.getElementById('upload-btn').addEventListener('click', async () => {
 
     reader.readAsDataURL(file);
 });
-    reader.readAsDataURL(file);
-});
-
