@@ -27,3 +27,29 @@ document.getElementById('upload-btn').addEventListener('click', async () => {
 
     reader.readAsDataURL(file);
 });
+
+
+
+function parseTextAndCalculateOdds(text) {
+    // Simple regex to extract player hands and community cards
+    const playerRegex = /Player \d+: ([\w\s]+)/g;
+    const communityRegex = /Community Cards: ([\w\s]+)/;
+
+    let playerHands = [];
+    let communityCards = null;
+
+    let match;
+    while ((match = playerRegex.exec(text)) !== null) {
+        playerHands.push(match[1].trim());
+    }
+
+    const communityMatch = communityRegex.exec(text);
+    if (communityMatch) {
+        communityCards = communityMatch[1].trim();
+    }
+
+    console.log('Player Hands:', playerHands);
+    console.log('Community Cards:', communityCards);
+    // Call your odds calculation logic here
+    // const odds = calculateOdds(playerHands, communityCards);
+}
