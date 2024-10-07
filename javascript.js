@@ -13,43 +13,31 @@ document.getElementById('upload-btn').addEventListener('click', async () => {
         img.src = event.target.result;
 
         img.onload = async () => {
-            // Use Tesseract.js to recognize text in the image
-            const { data: { text } } = await Tesseract.recognize(img, 'eng', {
-                logger: info => console.log(info) // Log progress
-            });
+            console.log('Image loaded successfully');
 
-            // Display the extracted text
-            document.getElementById('result').innerText = `Extracted Text: ${text}`;
-            // Here you can parse the text and calculate odds
-            // Example: parseTextAndCalculateOdds(text);
+            try {
+                const { data: { text } } = await Tesseract.recognize(img, 'eng', {
+                    logger: info => console.log(info) // Log progress
+                });
+                
+                // Display the extracted text
+                document.getElementById('result').innerText = `Extracted Text: ${text}`;
+                
+                // Call your parsing function here
+                // parseTextAndCalculateOdds(text);
+            } catch (error) {
+                console.error('Error during OCR processing:', error);
+            }
         };
+
+        img.onerror = (error) => {
+            console.error('Error loading image:', error);
+        };
+    };
+
+    reader.onerror = (error) => {
+        console.error('Error reading file:', error);
     };
 
     reader.readAsDataURL(file);
 });
-
-
-
-function parseTextAndCalculateOdds(text) {
-    // Simple regex to extract player hands and community cards
-    const playerRegex = /Player \d+: ([\w\s]+)/g;
-    const communityRegex = /Community Cards: ([\w\s]+)/;
-
-    let playerHands = [];
-    let communityCards = null;
-
-    let match;
-    while ((match = playerRegex.exec(text)) !== null) {
-        playerHands.push(match[1].trim());
-    }
-
-    const communityMatch = communityRegex.exec(text);
-    if (communityMatch) {
-        communityCards = communityMatch[1].trim();
-    }
-
-    console.log('Player Hands:', playerHands);
-    console.log('Community Cards:', communityCards);
-    // Call your odds calculation logic here
-    // const odds = calculateOdds(playerHands, communityCards);
-}
