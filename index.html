@@ -1,28 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spinning Earth with CesiumJS</title>
-    <link rel="stylesheet" href="https://cesium.com/downloads/cesiumjs/releases/1.100.0/Build/Cesium/Widgets/widgets.css">
-    <style>
-        html, body, #cesiumContainer {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-</head>
-<body>
-    <div id="cesiumContainer"></div>
-    <script src="https://cesium.com/downloads/cesiumjs/releases/1.100.0/Build/Cesium/Cesium.js"></script>
-    <script>
-        const viewer = new Cesium.Viewer('cesiumContainer', {
-            terrainProvider: Cesium.createWorldTerrain()
-        });
+    <title>Google Earth Enterprise Earth Plug-in: Local Example</title>
+    <link rel='stylesheet' type='text/css' href='/earth/earth.css' />
 
-        viewer.scene.globe.enableLighting = true; // Enable lighting for better visuals
+    <script type='text/javascript'>
+      // To serve your static content from a different server, simply override
+      // GEE_SERVER_URL to the URL of your GEE Server, e.g.:
+      // "http://yourhost.com/default_ge/"       var GEE_SERVER_URL = "";
     </script>
-</body>
+
+    <!-- Load the required Javascript files. The loader for the Earth Plug-in API:
+earth_plugin_loader.js. Utilities for this example UI: fusion_utils.js and search_tabs.js The main routine: geeInit()
+is found in fusion_earthplugin.js which defines the example UI and behaviors. -->
+     <script type='text/javascript' src='/js/earth_plugin_loader.js'></script>
+     <script type='text/javascript' src='/js/fusion_utils.js'></script>
+     <script type='text/javascript' src='/js/search_tabs.js'></script>
+     <script type='text/javascript' src='/js/fusion_earthplugin.js'></script>
+</head>
+
+<body onload='geeInit()' onresize='geeResizeDivs();'>
+
+   <div id='header'>
+     <div id='logo'> <img src="/earth/images/gee.gif" align="left" />
+     </div>
+     <div id='search_tabs'>
+     </div>
+  </div>
+
+ <div style="clear: both;"></div>
+
+   <table cellspacing="0" cellpadding="0" width="100%">
+     <tr valign="top">
+       <td id='left_panel_cell'>
+          <div id='left_panel'></div> </td>
+       <td>
+         <div id='map'></div>
+       </td>
+     </tr>
+   </table>
+  </body>
 </html>
+
