@@ -2,44 +2,7 @@ html {
     
 }
 
- body {
-            font-family: Arial, sans-serif;
-        }
 
-#card-grid {
-            display: grid;
-            grid-template-columns: repeat(13, 1fr);
-            gap: 5px;
-            margin-bottom: 20px;
-        }
-
-.card {
-            width: 40px; /* Adjust size as needed */
-            height: 60px; /* Adjust height for a card-like appearance */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #000;
-            background-color: #f0f0f0; /* Light gray background */
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            padding: 5px;    
-        }
-
-    
-.card.hearts { 
-    background-color: red; }
-
-.card.diamonds {
-    background-color: pink; }
-
-.card.clubs {
-    background-color: grey; }
-
-.card.spades {
-    background-color: black; }
-        /* Add any additional styling as needed */
 
 
 
